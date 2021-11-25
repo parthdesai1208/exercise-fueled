@@ -1,4 +1,10 @@
+import com.google.gson.Gson
+import model.Comment
+import model.Post
+import model.User
 import resources.Data
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
 
@@ -33,9 +39,23 @@ import resources.Data
 
 fun main(vararg args: String) {
 
-    // 2. Next, decode the JSON source using `[Data.getUsers()]`
+    val userList : ArrayList<User.UserItem> = ArrayList()
+    val totalPostOfUserList : ArrayList<Int> = ArrayList()
 
+    val postList : ArrayList<Post.PostItem> = ArrayList()
+    val commentList : ArrayList<Comment.CommentItem> = ArrayList()
 
+    userList.addAll(Data.getUsers())
+    postList.addAll(Data.getPosts())
+    commentList.addAll(Data.getComments())
+
+    userList.forEach {
+        var counter = 0
+        postList.forEach { it1 ->
+            if(it1.userId == it.id)  counter++
+        }
+        totalPostOfUserList.add(counter)
+    }
 
     // 3. Finally, calculate the average number of comments per user and use it
     //    to find the 3 most engaging bloggers and output the result.
